@@ -9,6 +9,11 @@ if (!get_session('ss_admin')) {
 }
 */
 
+// adm/bbs 상수추가
+define('G5_ADM_BBS_URL', G5_ADMIN_URL.'/bbs');
+define('G5_ADM_BBS_PATH', G5_ADMIN_PATH.'/bbs');
+// end
+
 // 스킨디렉토리를 SELECT 형식으로 얻음
 function get_skin_select($skin_gubun, $id, $name, $selected='', $event='')
 {
@@ -557,4 +562,6 @@ if ( isset($_REQUEST) && $_REQUEST ){
 
 // 관리자에서는 추가 스크립트는 사용하지 않는다.
 //$config['cf_add_script'] = '';
+
+
 ?>
