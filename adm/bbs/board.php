@@ -1,5 +1,26 @@
 <?php
+
 include_once('./_common.php');
+
+$sub_menu = "1000000";
+if ($_GET['bo_table'] == 'free') {
+    $sub_menu = "1000100";
+} elseif($_GET['bo_table'] == 'gallery'){
+    $sub_menu = "1000200";
+} elseif($_GET['bo_table'] == 'notice'){
+    $sub_menu = "1000300";
+} elseif($_GET['bo_table'] == 'qa'){
+    $sub_menu = "1000400";
+}
+
+$token = get_token();
+
+if ($is_admin != 'super'){
+    alert('최고관리자만 접근 가능합니다.');
+}
+
+include_once ('../admin.head.php');
+
 
 if (!$board['bo_table']) {
    alert('존재하지 않는 게시판입니다.', G5_URL);
@@ -176,7 +197,8 @@ if (isset($wr_id) && $wr_id) {
     $g5['title'] = $g5['board_title'].' '.$page.' 페이지';
 }
 
-include_once(G5_PATH.'/head.sub.php');
+// include_once(G5_PATH.'/head.sub.php');
+include_once ('../admin.head.php');
 
 $width = $board['bo_table_width'];
 if ($width <= 100)
@@ -240,5 +262,6 @@ include_once(G5_BBS_PATH.'/board_tail.php');
 
 echo "\n<!-- 사용스킨 : ".(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin'])." -->\n";
 
-include_once(G5_PATH.'/tail.sub.php');
+// include_once(G5_PATH.'/tail.sub.php');
+include_once ('../admin.tail.php');
 ?>
