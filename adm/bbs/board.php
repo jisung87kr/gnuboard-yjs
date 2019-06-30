@@ -1,17 +1,6 @@
 <?php
 include_once('./_common.php');
-$qstr = ''; //관리자에서 쓰이는 기본 쿼리스트팅 제거, 페이지네이션을 사용하기 위해 추가
 
-$sub_menu = "1000000";
-if ($_GET['bo_table'] == 'free') {
-    $sub_menu = "1000100";
-} elseif($_GET['bo_table'] == 'gallery'){
-    $sub_menu = "1000200";
-} elseif($_GET['bo_table'] == 'notice'){
-    $sub_menu = "1000300";
-} elseif($_GET['bo_table'] == 'qa'){
-    $sub_menu = "1000400";
-}
 
 if ($is_admin != 'super'){
     alert('최고관리자만 접근 가능합니다.');
