@@ -3,6 +3,24 @@ include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
+$sub_menu = "1000000";
+if ($_GET['bo_table'] == 'free') {
+    $sub_menu = "1000100";
+} elseif($_GET['bo_table'] == 'gallery'){
+    $sub_menu = "1000200";
+} elseif($_GET['bo_table'] == 'notice'){
+    $sub_menu = "1000300";
+} elseif($_GET['bo_table'] == 'qa'){
+    $sub_menu = "1000400";
+}
+
+// $token = get_admin_token();
+// var_dump($token);
+
+if ($is_admin != 'super'){
+    alert('최고관리자만 접근 가능합니다.');
+}
+
 if (!$board['bo_table']) {
     alert('존재하지 않는 게시판입니다.', G5_URL);
 }
@@ -419,16 +437,16 @@ $editor_js .= chk_editor_js('wr_content', $is_dhtml_editor);
 // 임시 저장된 글 수
 $autosave_count = autosave_count($member['mb_id']);
 
-include_once(G5_PATH.'/head.sub.php');
+include_once('../admin.head.php');
 @include_once ($board_skin_path.'/write.head.skin.php');
-include_once('./board_head.php');
+include_once(G5_ADM_BBS_PATH.'./board_head.php');
 
 $action_url = https_url(G5_BBS_DIR)."/write_update.php";
 
 echo '<!-- skin : '.(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin']).' -->';
 include_once ($board_skin_path.'/write.skin.php');
 
-include_once('./board_tail.php');
+include_once(G5_ADM_BBS_PATH.'./board_tail.php');
 @include_once ($board_skin_path.'/write.tail.skin.php');
-include_once(G5_PATH.'/tail.sub.php');
+include_once('../admin.tail.php');
 ?>

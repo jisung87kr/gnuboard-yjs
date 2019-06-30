@@ -13,8 +13,6 @@ if ($_GET['bo_table'] == 'free') {
     $sub_menu = "1000400";
 }
 
-$token = get_token();
-
 if ($is_admin != 'super'){
     alert('최고관리자만 접근 가능합니다.');
 }

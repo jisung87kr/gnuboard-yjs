@@ -109,9 +109,14 @@ function get_ajax_token()
 
 $(function() {
     $(document).on("click", "form input:submit", function() {
+        var current_url = window.location.href;
+        if(current_url.indexOf(g5_adm_bbs_url) != -1){ // g5_adm_bbs_url 인경우 패스
+            return true;
+        }
+
+
         var f = this.form;
         var token = get_ajax_token();
-
         if(!token) {
             alert("토큰 정보가 올바르지 않습니다.");
             return false;
