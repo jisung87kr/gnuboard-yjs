@@ -334,7 +334,7 @@ function get_dirsize($dir)
 
 
 // 게시물 정보($write_row)를 출력하기 위하여 $list로 가공된 정보를 복사 및 가공
-function get_list($write_row, $board, $skin_url, $subject_len=40)
+function get_list($write_row, $board, $skin_url, $subject_len=40, $bbsPath=G5_BBS_URL)
 {
     global $g5, $config;
     global $qstr, $page;
@@ -406,9 +406,9 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
         $list['icon_link'] = '<i class="fa fa-link" aria-hidden="true"></i> ';
 
     // 분류명 링크
-    $list['ca_name_href'] = G5_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
+    $list['ca_name_href'] = $bbsPath.'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
 
-    $list['href'] = G5_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
+    $list['href'] = $bbsPath.'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
     $list['comment_href'] = $list['href'];
 
     $list['icon_new'] = '';
@@ -426,7 +426,7 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     // 링크
     for ($i=1; $i<=G5_LINK_COUNT; $i++) {
         $list['link'][$i] = set_http(get_text($list["wr_link{$i}"]));
-        $list['link_href'][$i] = G5_BBS_URL.'/link.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].'&amp;no='.$i.$qstr;
+        $list['link_href'][$i] = $bbsPath.'/link.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].'&amp;no='.$i.$qstr;
         $list['link_hit'][$i] = (int)$list["wr_link{$i}_hit"];
     }
 
