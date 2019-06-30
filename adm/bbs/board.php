@@ -1,6 +1,6 @@
 <?php
-
 include_once('./_common.php');
+$qstr = ''; //관리자에서 쓰이는 기본 쿼리스트팅 제거, 페이지네이션을 사용하기 위해 추가
 
 $sub_menu = "1000000";
 if ($_GET['bo_table'] == 'free') {
