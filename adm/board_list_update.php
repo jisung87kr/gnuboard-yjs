@@ -35,6 +35,7 @@ if ($_POST['act_button'] == "선택수정") {
                     set gr_id               = '".sql_real_escape_string(strip_tags($_POST['gr_id'][$k]))."',
                         bo_subject          = '".$p_bo_subject."',
                         bo_device           = '".sql_real_escape_string(strip_tags($_POST['bo_device'][$k]))."',
+                        bo_adm_skin             = '".sql_real_escape_string(strip_tags($_POST['bo_adm_skin'][$k]))."',
                         bo_skin             = '".sql_real_escape_string(strip_tags($_POST['bo_skin'][$k]))."',
                         bo_mobile_skin      = '".sql_real_escape_string(strip_tags($_POST['bo_mobile_skin'][$k]))."',
                         bo_read_point       = '".sql_real_escape_string(strip_tags($_POST['bo_read_point'][$k]))."',

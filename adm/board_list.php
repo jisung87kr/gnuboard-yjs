@@ -4,6 +4,14 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
+// bo_adm_skin 칼럼 추가
+$is_bo_adm_skin = sql_query("SHOW COLUMNS FROM `g5_board` LIKE 'bo_adm_skin'");
+if(!$is_bo_adm_skin->num_rows){
+    sql_query("ALTER TABLE `g5_board` ADD `bo_adm_skin` VARCHAR(200)");
+}
+
+// 
+
 $sql_common = " from {$g5['board_table']} a ";
 $sql_search = " where (1) ";
 
@@ -94,6 +102,7 @@ $colspan = 15;
         </th>
         <th scope="col"><?php echo subject_sort_link('a.gr_id') ?>그룹</a></th>
         <th scope="col"><?php echo subject_sort_link('bo_table') ?>TABLE</a></th>
+        <th scope="col"><?php echo subject_sort_link('bo_adm_skin', '', 'desc') ?>관리자스킨</a></th>
         <th scope="col"><?php echo subject_sort_link('bo_skin', '', 'desc') ?>스킨</a></th>
         <th scope="col"><?php echo subject_sort_link('bo_mobile_skin', '', 'desc') ?>모바일<br>스킨</a></th>
         <th scope="col"><?php echo subject_sort_link('bo_subject') ?>제목</a></th>
@@ -132,6 +141,10 @@ $colspan = 15;
         <td>
             <input type="hidden" name="board_table[<?php echo $i ?>]" value="<?php echo $row['bo_table'] ?>">
             <a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $row['bo_table'] ?>"><?php echo $row['bo_table'] ?></a>
+        </td>
+        <td>
+            <label for="bo_adm_skin_<?php echo $i; ?>" class="sound_only">관리자스킨</label>
+            <?php echo get_skin_select('board', 'bo_adm_skin_'.$i, "bo_adm_skin[$i]", $row['bo_adm_skin']); ?>
         </td>
         <td>
             <label for="bo_skin_<?php echo $i; ?>" class="sound_only">스킨</label>
