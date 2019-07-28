@@ -17,6 +17,8 @@ if(isset($bo_table)){ // 현재 페이지 메뉴 찾기
 }
 
 // 관리자 스킨 경로 덮어쓰기
-$board_skin_path    = get_skin_path('board', $board['bo_adm_skin']);
-$board_skin_url     = get_skin_url('board', $board['bo_adm_skin']);
+if(!empty($board['bo_adm_skin'])){
+    $board_skin_path    = get_skin_path('board', $board['bo_adm_skin']);
+    $board_skin_url     = get_skin_url('board', $board['bo_adm_skin']);
+}
 ?>
