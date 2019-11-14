@@ -132,7 +132,7 @@ function imageview(id, w, h)
                 }
 
                 $current_class = "";
-                if (isset($sub_menu) && (substr($sub_menu, 0, 3) == substr($menu['menu'.$key][0][0], 0, 3)))
+                if (isset($sub_menu) && (substr($sub_menu, 0, 2) == substr($menu['menu'.$key][0][0], 0, 2)))
                     $current_class = " on";
 
                 $button_title = $menu['menu'.$key][0][1];
