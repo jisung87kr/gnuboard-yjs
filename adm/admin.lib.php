@@ -498,7 +498,11 @@ if (!$member['mb_id'])
 else if ($is_admin != 'super')
 {
     $auth = array();
-    $sql = " select au_menu, au_auth from {$g5['auth_table']} where mb_id = '{$member['mb_id']}' ";
+    if(sql_fetch("SHOW TABLES LIKE 'view_auth_menu'")){
+        $sql = "SELECT * FROM view_auth_menu WHERE mb_id = '{$member['mb_id']}'";
+    } else {
+        $sql = " select au_menu, au_auth from {$g5['auth_table']} where mb_id = '{$member['mb_id']}' ";
+    }
     $result = sql_query($sql);
     for($i=0; $row=sql_fetch_array($result); $i++)
     {
