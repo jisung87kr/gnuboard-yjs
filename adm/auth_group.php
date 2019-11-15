@@ -10,7 +10,7 @@ if(!sql_fetch("SHOW TABLES LIKE 'auth_group'")){
             PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     if(!sql_query($sql)){
-        die('테이블 생성 오류');
+        die('auth_group 테이블 생성 오류');
     };
 }
 
@@ -19,48 +19,38 @@ if(!sql_fetch("SHOW TABLES LIKE 'auth_menu'")){
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `auth_group_id` int(11) NOT NULL,
             `au_menu` int(11) NOT NULL,
-            PRIMARY KEY (`id`)
+            PRIMARY KEY (`id`),
+            CONSTRAINT `auth_group__auth_menu` FOREIGN KEY (`auth_group_id`) REFERENCES `auth_group`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     if(!sql_query($sql)){
-        die('테이블 생성 오류');
-    } else {
-        $sql = "ALTER TABLE `auth_menu` ADD CONSTRAINT `auth_group__auth_menu` FOREIGN KEY (`auth_group_id`) REFERENCES `auth_group`(`id`) ON DELETE CASCADE ON UPDATE CASCADE";
-        if(!sql_query($sql)){
-            die('제약관계 생성 오류');
-        }
-    };
+        die('auth_menu 테이블 생성 오류');
+    }
 }
 
 if(!sql_fetch("SHOW TABLES LIKE 'auth_role'")){
     $sql = "CREATE TABLE IF NOT EXISTS `auth_role` (
             `auth_menu_id` int(11) NOT NULL,
             `au_auth` set('r','w','d') NOT NULL,
-            PRIMARY KEY (`auth_menu_id`)
+            PRIMARY KEY (`auth_menu_id`),
+            CONSTRAINT `auth_menu__auth_role` FOREIGN KEY (`auth_menu_id`) REFERENCES `auth_menu`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     if(!sql_query($sql)){
-        die('테이블 생성 오류');
-    } else {
-        $sql = "ALTER TABLE `auth_role` ADD CONSTRAINT `auth_menu__auth_role` FOREIGN KEY (`auth_menu_id`) REFERENCES `auth_menu`(`id`) ON DELETE CASCADE ON UPDATE CASCADE";
-        if(!sql_query($sql)){
-            die('제약관계 생성 오류');
-        }
-    };
+        die('auth_role 테이블 생성 오류');
+    }
 }
 
 if(!sql_fetch("SHOW TABLES LIKE 'auth_admin'")){
     $sql = "CREATE TABLE IF NOT EXISTS `auth_admin` (
+            `idx` int(11) NOT NULL,
             `mb_id` varchar(255) NOT NULL,
             `auth_group_id` int(11) NOT NULL,
-            PRIMARY KEY (`mb_id`)
+            PRIMARY KEY (`idx`),
+            CONSTRAINT `auth_group__auth_admin` FOREIGN KEY (`auth_group_id`) REFERENCES `auth_group`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-    if(!sql_query($sql)){
-        die('테이블 생성 오류');
-    } else {
-        $sql = "ALTER TABLE `auth_admin` ADD CONSTRAINT `auth_group__auth_admin` FOREIGN KEY (`auth_group_id`) REFERENCES `auth_group`(`id`) ON DELETE CASCADE ON UPDATE CASCADE";
-        if(!sql_query($sql)){
-            die('제약관계 생성 오류');
-        }
-    };
+    if(!sql_query($sql, $e=true)){
+        var_dump($e);
+        die('auth_admin 테이블 생성 오류');
+    }
 }
 
 //뷰가 없으면 생성
