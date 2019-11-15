@@ -90,7 +90,9 @@ if(isset($del)){
 $sql = "SELECT * FROM auth_group";
 $result = sql_query($sql);
 ?>
-
+<div class="btn_fixed_top">
+    <a href="./auth_group_form.php" id="mail_add" class="btn btn_01">권한생성</a>
+</div>
 <div class="tbl_head01 tbl_wrap">
     <table>
         <thead>
@@ -104,14 +106,21 @@ $result = sql_query($sql);
             <tr>
                 <td><?php echo $row['auth_group_name']?></td>
                 <td>
-                    <a href="<?php echo G5_ADMIN_URL.'/auth_group_form.php?id='.$row['id']?>" class="btn btn_03">수정</a>
-                    <a href="./auth_group.php?del=<?php echo $row['id']?>" class="btn btn_01">삭제</a>
+                    <a href="./auth_group_form.php?id=<?php echo $row['id'] ?>" class="btn btn_03">수정</a>
+                    <a href="./auth_group.php?del=<?php echo $row['id']?>" class="btn btn_01" onClick="del_check(event)">삭제</a>
                 </td>
             </tr>    
             <?php } ?>
         </tbody>
     </table>
 </div>
+<script>
+    function del_check(event){
+        if(!confirm('삭제 하시겠습니까?')){
+            event.preventDefault();
+        }
+    }
+</script>
 
 
 <?php
