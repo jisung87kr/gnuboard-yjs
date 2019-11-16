@@ -3,8 +3,10 @@ include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
-if ($is_admin != 'super'){
-    alert('최고관리자만 접근 가능합니다.');
+if ($auth_user != 'super'){
+    if($is_admin != 'super'){
+        alert('최고관리자만 접근 가능합니다.');
+    }
 }
 
 if (!$board['bo_table']) {
