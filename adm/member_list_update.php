@@ -43,6 +43,18 @@ if ($_POST['act_button'] == "선택수정") {
                             mb_adult = '{$mb_adult}'
                         where mb_id = '".sql_real_escape_string($_POST['mb_id'][$k])."' ";
             sql_query($sql);
+            //auth_admin 수정
+            if($_POST['auth_group'][$k] != ''){
+                $row = sql_fetch("SELECT * FROM auth_admin WHERE mb_id = '{$mb['mb_id']}'");
+                if ($row){
+                    $sql = "UPDATE auth_admin SET auth_group_id = '$auth_group' WHERE mb_id = '{$mb['mb_id']}'";
+                } else {
+                    $sql = "INSERT INTO auth_admin SET mb_id = '{$mb['mb_id']}', auth_group_id = '{$_POST['auth_group'][$k]}'";
+                }
+                sql_query($sql, $e=true);
+            } else {
+                sql_query("DELETE FROM auth_admin WHERE mb_id = '{$mb['mb_id']}'");
+            }
         }
     }
 

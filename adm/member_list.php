@@ -4,7 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$sql_common = " from {$g5['member_table']} ";
+//$sql_common = " , A.mb_id AS mb_id from ";
+$sql_common = " , A.mb_id AS mb_id from {$g5['member_table']} AS A LEFT JOIN auth_admin AS B ON A.mb_id = B.mb_id LEFT JOIN auth_group AS C ON C.id = B.auth_group_id ";
 
 $sql_search = " where (1) ";
 if ($stx) {
@@ -121,6 +122,7 @@ $colspan = 16;
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
         <th scope="col" id="mb_list_id" colspan="2"><?php echo subject_sort_link('mb_id') ?>아이디</a></th>
+        <th scope="col" rowspan="2" id="mb_auth"><?php echo subject_sort_link('auth_group_id', '', 'desc') ?>권한그룹</a></th>
         <th scope="col" rowspan="2" id="mb_list_cert"><?php echo subject_sort_link('mb_certify', '', 'desc') ?>본인확인</a></th>
         <th scope="col" id="mb_list_mailc"><?php echo subject_sort_link('mb_email_certify', '', 'desc') ?>메일인증</a></th>
         <th scope="col" id="mb_list_open"><?php echo subject_sort_link('mb_open', '', 'desc') ?>정보공개</a></th>
@@ -234,6 +236,18 @@ $colspan = 16;
                 }
             }
             ?>
+        </td>
+        <td rowspan="2">
+            <select name="auth_group[]" id="auth_group">
+                <option value="">미지정</option>
+                <?php 
+                $sql2 = "SELECT * FROM auth_group";
+                $result2 = sql_query($sql2);
+                while ($row2 = sql_fetch_array($result2)) {
+                ?>
+                <option value="<?php echo $row2['id']?>" <?php echo get_selected($row2['id'], $row['auth_group_id']); ?>><?php echo $row2['auth_group_name']?></option>
+                <?php } ?>
+            </select>
         </td>
         <td headers="mb_list_cert"  rowspan="2" class="td_mbcert">
             <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="ipin" id="mb_certify_ipin_<?php echo $i; ?>" <?php echo $row['mb_certify']=='ipin'?'checked':''; ?>>
