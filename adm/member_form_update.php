@@ -236,5 +236,19 @@ if( $w == '' || $w == 'u' ){
     }
 }
 
+// auth_admin 추가
+if($auth_group != ''){
+    $row = sql_fetch("SELECT * FROM auth_admin WHERE mb_id = '$mb_id'");
+    if ($row){
+        $sql = "UPDATE auth_admin SET auth_group_id = '$auth_group' WHERE mb_id = '$mb_id'";
+    } else {
+        $sql = "INSERT INTO auth_admin SET mb_id = '$mb_id', auth_group_id = '$auth_group'";
+    }
+    sql_query($sql, $e=true);
+} else {
+    sql_query("DELETE FROM auth_admin WHERE mb_id = '$mb_id'");
+}
+
+
 goto_url('./member_form.php?'.$qstr.'&amp;w=u&amp;mb_id='.$mb_id, false);
 ?>

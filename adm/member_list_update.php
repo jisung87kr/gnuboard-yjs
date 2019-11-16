@@ -66,6 +66,12 @@ if ($_POST['act_button'] == "선택수정") {
         } else {
             // 회원자료 삭제
             member_delete($mb['mb_id']);
+
+            //auth_admin 삭제
+            $row = sql_fetch("SELECT * FROM auth_admin WHERE mb_id = '{$mb['mb_id']}'");
+            if ($row){
+                sql_query("DELETE FROM auth_admin WHERE mb_id = '{$mb['mb_id']}'");
+            }
         }
     }
 }

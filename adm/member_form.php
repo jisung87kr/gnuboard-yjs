@@ -175,6 +175,26 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <td><input type="text" name="mb_nick" value="<?php echo $mb['mb_nick'] ?>" id="mb_nick" required class="required frm_input" size="15"  maxlength="20"></td>
     </tr>
     <tr>
+        <th>관리자 권한</th>
+        <td>
+            <select name="auth_group" id="">
+                <option value="">미지정</option>
+                <?php
+                $sql = "SELECT * FROM auth_group";
+                $result = sql_query($sql);
+                if($w == 'u'){
+                    $auth_row = sql_fetch("SELECT * FROM auth_admin WHERE mb_id = '{$mb['mb_id']}'");
+                    var_dump($auth_row);
+                }; 
+                while ($row = sql_fetch_array($result)) {
+                ?>
+                <option value="<?php echo $row['id']?>" <?php echo get_selected($row['id'], $auth_row['auth_group_id']); ?>><?php echo $row['auth_group_name']?></option>
+                <?php } ?>
+            </select>
+            <span class="frm_info">관리자에 접속할 수 있는 권한을 부여합니다.<br> <a href="./auth_group.php">권한그룹관리</a>에서 관리할 수 있습니다.</span>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="mb_level">회원 권한</label></th>
         <td><?php echo get_member_level_select('mb_level', 1, $member['mb_level'], $mb['mb_level']) ?></td>
         <th scope="row">포인트</th>
