@@ -5,19 +5,22 @@ include_once('./_common.php');
 $g5['title'] = "관리권한설정 쓰기";
 include_once('./admin.head.php');
 
+$result = sql_query("SELECT * FROM view_auth_menu WHERE id = '$id'");
+$auth_name = sql_fetch("SELECT * FROM auth_group WHERE id = '$id'");
 ?>
-<div class="btn_fixed_top">
-    <a href="./auth_group_form.php" id="mail_add" class="btn btn_02">취소</a>
-    <a href="./auth_group_form.php" id="mail_add" class="btn btn_01">저장</a>
-</div>
+
 <div class="tbl_frm01 tbl_wrap">
-    <form action="">
+    <form action="./auth_group_update.php" method="POST">
+    <div class="btn_fixed_top">
+        <a href="./auth_group_form.php" id="mail_add" class="btn btn_02">취소</a>
+        <input type="submit" value="저장" class="btn_submit btn" accesskey='s'>
+    </div>
         <table>
             <tbody>
                 <tr>
                     <th>권한명</th>
                     <td>
-                        <input type="text" class="required frm_input">
+                        <input type="text" name="auth_group_name" class="required frm_input" value="<?php echo $auth_name['auth_group_name']?>">
                     </td>
                 </tr>
                 <tr>
@@ -30,37 +33,42 @@ include_once('./admin.head.php');
                                     <div class="menubox__grouptxt"><?php echo $value[0][1]?></div>
                                     <div class="menubox__inputbox clear">
                                         <div class="menubox__input">
-                                            <input type="checkbox" name="auth_grp_r" id="auth_grp_r-<?php echo $key?>" class="menubox__checkbox" data-type="r">
+                                            <input type="checkbox" id="auth_grp_r-<?php echo $key?>" class="menubox__checkbox" value="r" data-type="r">
                                             <label for="auth_grp_r-<?php echo $key?>" class="menubox__label">읽기</label>
                                         </div>
                                         <div class="menubox__input">
-                                            <input type="checkbox" name="auth_grp_w" id="auth_grp_w-<?php echo $key?>" class="menubox__checkbox" data-type="w">
+                                            <input type="checkbox" id="auth_grp_w-<?php echo $key?>" class="menubox__checkbox" value="w" data-type="w">
                                             <label for="auth_grp_w-<?php echo $key?>" class="menubox__label">쓰기</label>
                                         </div>
                                         <div class="menubox__input">
-                                            <input type="checkbox" name="auth_grp_d" id="auth_grp_d-<?php echo $key?>" class="menubox__checkbox" data-type="d">
+                                            <input type="checkbox" id="auth_grp_d-<?php echo $key?>" class="menubox__checkbox" value="d" data-type="d">
                                             <label for="auth_grp_d-<?php echo $key?>" class="menubox__label">삭제</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="clear">
-                                    <?php foreach ($value as $k => $v) { if($k == 0) { continue; }?>
-                                    <div class="menubox__item">
+                                    <?php foreach ($value as $k => $v) {
+                                         if($k == 0) { continue; }
+                                         $row = sql_fetch("SELECT * FROM view_auth_menu WHERE id = '$id' AND au_menu = '$v[0]'");
+                                         $active = $row ? "active" : "";
+                                    ?>
+                                    <div class="menubox__item <?php echo $active?>">
                                         <div class="menubox__tit">
                                             <label for="group_tit-<?php echo $k?>" class="menubox__menutit-label"><?php echo $v[1]?></label>
                                             <input type="checkbox" id="group_tit-<?php echo $k?>" class="menubox__menu-checkbox">
                                         </div>
                                         <div class="menubox__inputbox clear">
+                                            <input type="hidden" name="auth_rwd[<?php echo $v[0]?>]" value="" class="menubox__rwd">
                                             <div class="menubox__input">
-                                                <input type="checkbox" name="auth_r[<?php echo $k?>]" id="auth_r-<?php echo $k?>" class="menubox__checkbox" data-type="r">
+                                                <input type="checkbox" id="auth_r-<?php echo $k?>" class="menubox__checkbox" value="r" data-type="r" <?php echo $row['au_menu'] == $v[0] ? "checked" : ""?>>
                                                 <label for="auth_r-<?php echo $k?>" class="menubox__label">읽기</label>
                                             </div>
                                             <div class="menubox__input">
-                                                <input type="checkbox" name="auth_w[<?php echo $k?>]" id="auth_w-<?php echo $k?>" class="menubox__checkbox" data-type="w">
+                                                <input type="checkbox" id="auth_w-<?php echo $k?>" class="menubox__checkbox" value="w" data-type="w" <?php echo $row['au_menu'] == $v[0] ? "checked" : ""?>>
                                                 <label for="auth_w-<?php echo $k?>" class="menubox__label">쓰기</label>
                                             </div>
                                             <div class="menubox__input">
-                                                <input type="checkbox" name="auth_d[<?php echo $k?>]" id="auth_d-<?php echo $k?>" class="menubox__checkbox" data-type="d">
+                                                <input type="checkbox" id="auth_d-<?php echo $k?>" class="menubox__checkbox" value="d" data-type="d" <?php echo $row['au_menu'] == $v[0] ? "checked" : ""?>>
                                                 <label for="auth_d-<?php echo $k?>" class="menubox__label">삭제</label>
                                             </div>
                                         </div>
@@ -77,14 +85,19 @@ include_once('./admin.head.php');
     </form>
 </div>
 <script>
-    function setActive(element){
+    function setRWD(element){
         var targets = element.find(".menubox__checkbox");
         var ck_array = [];
+        var rwd = element.find('.menubox__rwd');
         for (var i=0; i < targets.length; i++) {
-            ck_array[i] = $(targets).eq(i).prop('checked');
+            if($(targets).eq(i).prop('checked')){
+                ck_array.push($(targets).eq(i).val());
+            }
         }
 
-        if($.inArray(true, ck_array) != -1){
+        $(rwd).val(ck_array);
+
+        if($(rwd).val()){
             element.addClass("active");
         } else {
             element.removeClass("active");
@@ -105,7 +118,7 @@ include_once('./admin.head.php');
         for(var i=0; i<items.length; i++){
             (function(i){
                 var element = $(items).eq(i);
-                setActive(element);
+                setRWD(element);
             })(i);
         }
     });
@@ -121,15 +134,13 @@ include_once('./admin.head.php');
             targets.prop('checked', '');
         }
 
-        setActive(parent);
+        setRWD(parent);
     });
 
     $(".menubox__item .menubox__checkbox").on("click, change", function(){
         var parent = $(this).closest(".menubox__item");
-        setActive(parent);
+        setRWD(parent);
     });
-
-
 </script>
 <style>
     .clear:after{
