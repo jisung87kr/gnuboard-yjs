@@ -102,7 +102,7 @@ $result = sql_query($sql);
             <?php while ($row = sql_fetch_array($result)) { ?>
             <tr>
                 <td><?php echo $row['auth_group_name']?></td>
-                <td>
+                <td class="td_mng td_mng_m">
                     <a href="./auth_group_form.php?id=<?php echo $row['id'] ?>" class="btn btn_03">수정</a>
                     <a href="./auth_group.php?del=<?php echo $row['id']?>" class="btn btn_01" onClick="del_check(event)">삭제</a>
                 </td>
