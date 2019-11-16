@@ -59,19 +59,16 @@ if(!sql_fetch("SHOW TABLES LIKE 'view_auth_menu'")){
     ALGORITHM = UNDEFINED
     VIEW `view_auth_menu`
     AS SELECT 
-       A.mb_id,
-       B.auth_group_name,
-       C.au_menu,
-       D.au_auth
-   FROM 
-       auth_admin AS A,
-       auth_group AS B,
-       auth_menu AS C,
-       auth_role AS D
-   WHERE
-       A.auth_group_id = B.id AND
-       B.id = C.auth_group_id AND
-       C.id = D.auth_menu_id";
+        A.id,
+        A.auth_group_name,
+        B.mb_id,
+        C.au_menu,
+        D.au_auth
+    FROM 
+        auth_group AS A LEFT JOIN auth_admin AS B ON A.id = B.auth_group_id 
+        LEFT JOIN auth_menu AS C ON C.auth_group_id = A.id
+        LEFT JOIN auth_role AS D ON D.auth_menu_id = C.id;";
+
     if(!sql_query($sql)){
         die('뷰생성 에러');
     };
