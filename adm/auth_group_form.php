@@ -60,16 +60,16 @@ $auth_name = sql_fetch("SELECT * FROM auth_group WHERE id = '$id'");
                                         <div class="menubox__inputbox clear">
                                             <input type="hidden" name="auth_rwd[<?php echo $v[0]?>]" value="" class="menubox__rwd">
                                             <div class="menubox__input">
-                                                <input type="checkbox" id="auth_r-<?php echo $k?>" class="menubox__checkbox" value="r" data-type="r" <?php echo strpos($row['au_auth'], 'r') !== false ? "checked" : ""?>>
-                                                <label for="auth_r-<?php echo $k?>" class="menubox__label">읽기</label>
+                                                <input type="checkbox" id="auth_r-<?php echo $v[0]?>" class="menubox__checkbox" value="r" data-type="r" <?php echo strpos($row['au_auth'], 'r') !== false ? "checked" : ""?>>
+                                                <label for="auth_r-<?php echo $v[0]?>" class="menubox__label">읽기</label>
                                             </div>
                                             <div class="menubox__input">
-                                                <input type="checkbox" id="auth_w-<?php echo $k?>" class="menubox__checkbox" value="w" data-type="w" <?php echo strpos($row['au_auth'], 'w') !== false ? "checked" : ""?>>
-                                                <label for="auth_w-<?php echo $k?>" class="menubox__label">쓰기</label>
+                                                <input type="checkbox" id="auth_w-<?php echo $v[0]?>" class="menubox__checkbox" value="w" data-type="w" <?php echo strpos($row['au_auth'], 'w') !== false ? "checked" : ""?>>
+                                                <label for="auth_w-<?php echo $v[0]?>" class="menubox__label">쓰기</label>
                                             </div>
                                             <div class="menubox__input">
-                                                <input type="checkbox" id="auth_d-<?php echo $k?>" class="menubox__checkbox" value="d" data-type="d" <?php echo strpos($row['au_auth'], 'd') !== false ? "checked" : ""?>>
-                                                <label for="auth_d-<?php echo $k?>" class="menubox__label">삭제</label>
+                                                <input type="checkbox" id="auth_d-<?php echo $v[0]?>" class="menubox__checkbox" value="d" data-type="d" <?php echo strpos($row['au_auth'], 'd') !== false ? "checked" : ""?>>
+                                                <label for="auth_d-<?php echo $v[0]?>" class="menubox__label">삭제</label>
                                             </div>
                                         </div>
                                     </div>
