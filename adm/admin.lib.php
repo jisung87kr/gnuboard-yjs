@@ -566,15 +566,4 @@ if ( isset($_REQUEST) && $_REQUEST ){
 // 관리자에서는 추가 스크립트는 사용하지 않는다.
 //$config['cf_add_script'] = '';
 
-// 권한이 있는 관리자인가?
-function is_auth_user($mb_id)
-{
-    global $config;
-
-    $row = sql_fetch("SELECT * FROM auth_admin WHERE mb_id = '$mb_id'");
-    if (!$mb_id) return;
-    if ($config['cf_admin'] == $mb_id || $row) return 'super';
-}
-
-$auth_user = is_auth_user($member['mb_id']);
 ?>
