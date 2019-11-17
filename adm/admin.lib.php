@@ -565,5 +565,10 @@ if ( isset($_REQUEST) && $_REQUEST ){
 
 // 관리자에서는 추가 스크립트는 사용하지 않는다.
 //$config['cf_add_script'] = '';
-
+function delete_auth_admin($mb_id){
+    $row = sql_fetch("SELECT * FROM auth_admin WHERE mb_id = '$mb_id'");
+    if ($row){
+        sql_query("DELETE FROM auth_admin WHERE mb_id = '$mb_id'");
+    }
+}
 ?>
