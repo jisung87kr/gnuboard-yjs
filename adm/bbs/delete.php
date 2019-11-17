@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+auth_check($auth[$sub_menu], 'd');
+
 $delete_token = get_session('ss_delete_token');
 set_session('ss_delete_token', '');
 

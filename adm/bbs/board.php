@@ -1,14 +1,6 @@
 <?php
 include_once('./_common.php');
-
-
-
-
-if ($auth_user != 'super'){
-    if($is_admin != 'super'){
-        alert('최고관리자만 접근 가능합니다.');
-    }
-}
+auth_check($auth[$sub_menu], 'r');
 
 if (!$board['bo_table']) {
    alert('존재하지 않는 게시판입니다.', G5_URL);
