@@ -23,10 +23,7 @@ check_admin_token();
 member_delete($mb['mb_id']);
 
 //auth_admin 삭제
-$row = sql_fetch("SELECT * FROM auth_admin WHERE mb_id = '{$mb['mb_id']}'");
-if ($row){
-    sql_query("DELETE FROM auth_admin WHERE mb_id = '{$mb['mb_id']}'");
-}
+delete_auth_admin($mb['mb_id']);
 
 if ($url)
     goto_url("{$url}?$qstr&amp;w=u&amp;mb_id=$mb_id");

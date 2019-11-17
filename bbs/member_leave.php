@@ -27,10 +27,7 @@ if(function_exists('social_member_link_delete')){
 }
 
 // auth_admin 삭제
-$row = sql_fetch("SELECT * FROM auth_admin WHERE mb_id = '{$member['mb_id']}'");
-if ($row){
-    sql_query("DELETE FROM auth_admin WHERE mb_id = '{$member['mb_id']}'");
-}
+delete_auth_admin($member['mb_id']);
 
 alert(''.$member['mb_nick'].'님께서는 '. date("Y년 m월 d일") .'에 회원에서 탈퇴 하셨습니다.', $url);
 ?>

@@ -29,10 +29,7 @@ for ($i=0; $i<count($chk); $i++)
         member_delete($mb['mb_id']);
 
         //auth_admin 삭제
-        $row = sql_fetch("SELECT * FROM auth_admin WHERE mb_id = '{$mb['mb_id']}'");
-        if ($row){
-            sql_query("DELETE FROM auth_admin WHERE mb_id = '{$mb['mb_id']}'");
-        }
+        delete_auth_admin($mb['mb_id']);
     }
 }
 
